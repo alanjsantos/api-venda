@@ -1,0 +1,38 @@
+import AppError from "@shared/errors/AppError";
+import { getCustomRepository } from "typeorm";
+import Products from "../typeorm/entities/Products";
+import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
+
+//tipando o objeto que irá ser salvo
+interface IRequest {
+    name: string;
+    price: number;
+    quantity: number;
+}
+
+class CreateProductsService {
+    public async excetute({name, price, quantity}: IRequest): Promise<Products> {
+
+        const productsRepo = getCustomRepository(ProductRepository);
+        const productExist = await productsRepo.findByName(name);
+        
+        //verifico se existe o produto com este mesmo nome
+        if(productExist){
+            throw new AppError('There is already one product with this name.')
+        }
+        //cria o produto
+        const product = productsRepo.create({
+            name,
+            price,
+            quantity,
+        })
+        
+        //salva o produto
+        await productsRepo.save(product);
+
+        //retorna o produto salvo.
+        return product;
+    }
+}
+
+export default CreateProductsService;
