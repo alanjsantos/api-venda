@@ -12,7 +12,7 @@ interface IRequest {
 
 class UpdateProductsService {
 
-    //metodo para criar um produto
+    //metodo para atualizar um produto
     public async excetute({id, name, price, quantity}: IRequest): Promise<Products> {
 
         const productsRepo = getCustomRepository(ProductRepository);
