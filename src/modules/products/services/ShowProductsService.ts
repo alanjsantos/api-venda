@@ -10,12 +10,12 @@ interface IRequest {
 class ShowProductsService {
 
     //metodo para criar um produto
-    public async excetute({id}: IRequest): Promise<Products | undefined> {
+    public async excetute({id}: IRequest): Promise<Products> {
 
         const productsRepo = getCustomRepository(ProductRepository);
   
         //buscando todos os produtos
-        const products = productsRepo.findOne(id)
+        const products = await productsRepo.findOne(id)
         
         if (!products) {
             throw new AppError('Produto não existe!')
