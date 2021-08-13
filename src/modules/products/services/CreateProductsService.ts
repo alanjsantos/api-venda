@@ -11,12 +11,14 @@ interface IRequest {
 }
 
 class CreateProductsService {
+
+    //metodo para criar um produto
     public async excetute({name, price, quantity}: IRequest): Promise<Products> {
 
         const productsRepo = getCustomRepository(ProductRepository);
         const productExist = await productsRepo.findByName(name);
         
-        //verifico se existe o produto com este mesmo nome
+        //verificando se existe produto com este mesmo nome
         if(productExist){
             throw new AppError('There is already one product with this name.')
         }
