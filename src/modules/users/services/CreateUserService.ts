@@ -1,4 +1,5 @@
 import AppError from "@shared/errors/AppError";
+import { hash } from "bcryptjs";
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import UserRepository from "../typeorm/repositories/UserRepository";
@@ -21,11 +22,14 @@ export default class CreateUserService {
             throw new AppError('There is a user with this email');
         }
 
+        //criptografando password do usuario
+        const hashedPassword = await hash(password, 8);
+
         //criando objeto a ser salvo
         const user = userRepo.create({
             name,
             email,
-            password
+            password: hashedPassword,
         })
 
         //salvando o objeto
