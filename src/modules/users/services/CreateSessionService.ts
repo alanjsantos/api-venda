@@ -1,5 +1,5 @@
 import AppError from "@shared/errors/AppError";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 import { getCustomRepository } from "typeorm";
 import User from "../typeorm/entities/User";
 import UserRepository from "../typeorm/repositories/UserRepository";
@@ -21,14 +21,14 @@ export default class CreaSessionService {
 
         //testando se existe usuario com este email no banco de dados.
         if (!user) {
-            throw new AppError('Incorret email/password combination', 401);
+            throw new AppError('Incorret email/password combination.', 401);
         }
 
         //comprando a senha criptografada com a senha do usuario
         const passwordConfirmed = await compare(password, user.password);
 
         if (!passwordConfirmed) {
-            throw new AppError('Incorret email/password combination');   
+            throw new AppError('Incorret email/password combination', 401);   
         }
 
         //retornando objeto salvo

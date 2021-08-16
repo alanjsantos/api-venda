@@ -51,4 +51,7 @@ celebrate({
           }),  
 productsController.deleteProducts);
 
+//endpoint user session
+
+
 export default productesRoutes;
