@@ -8,13 +8,13 @@ import fs from 'fs';
 
 interface IRequest {
     id: string;
-    avatarFIleName: string;
+    avatarFileName: string;
 }
 
 export default class UpdateUserAvatarService {
 
     //metodo para criar um produto
-    public async createUserAvatar({id, avatarFIleName}: IRequest): Promise<User> {
+    public async updateUserAvatar({id, avatarFileName}: IRequest): Promise<User> {
         const userRepo = getCustomRepository(UserRepository);
         const user = await userRepo.findById(id);
 
@@ -38,7 +38,7 @@ export default class UpdateUserAvatarService {
         }
         
         //cadastrando o avatar novo
-        user.avatar = avatarFIleName;
+        user.avatar = avatarFileName;
 
         //atualizando um novo avatar.
         await userRepo.save(user)
