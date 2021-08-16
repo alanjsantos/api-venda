@@ -1,15 +1,16 @@
 import { Router } from "express";
 import ProductsController from "../controller/ProductsController";
 import { celebrate, Joi, errors, Segments } from "celebrate";
+import isAuthenticated from "@modules/users/middlewares/isAuthenticated";
 
 const productesRoutes = Router();
 const productsController = new ProductsController();
 
 //endpoint listar products
-productesRoutes.get('/', productsController.listProduct);
+productesRoutes.get('/', isAuthenticated, productsController.listProduct);
 
 //endpoint buscar por products por id
-productesRoutes.get('/:id',
+productesRoutes.get('/:id', isAuthenticated,
  celebrate({
      [Segments.PARAMS]: {
          id: Joi.string().uuid().required(),
@@ -18,7 +19,7 @@ productesRoutes.get('/:id',
 productsController.showProducts);
 
 //endpoint criar products
-productesRoutes.post('/',
+productesRoutes.post('/', isAuthenticated,
  celebrate({
      [Segments.BODY]: {
          name: Joi.string().required(),
@@ -29,7 +30,7 @@ productesRoutes.post('/',
 productsController.createProducts);
 
 //endpoint atualizar products
-productesRoutes.put('/:id', 
+productesRoutes.put('/:id', isAuthenticated,
 celebrate({
     [Segments.BODY]: {
         name: Joi.string().required(),
@@ -43,7 +44,7 @@ celebrate({
 productsController.updateProducts)
 
 //endpoint deletar products.
-productesRoutes.delete('/:id',
+productesRoutes.delete('/:id', isAuthenticated,
 celebrate({
     [Segments.PARAMS]: {
         id: Joi.string().uuid().required(),

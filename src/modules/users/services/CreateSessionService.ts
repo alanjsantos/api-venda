@@ -1,3 +1,4 @@
+import auth from "@config/auth";
 import AppError from "@shared/errors/AppError";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
@@ -34,9 +35,10 @@ export default class CreaSessionService {
             throw new AppError('Incorret email/password combination', 401);   
         }   
 
-        const token = sign({}, '639698693822182ed3a9dc179c0c9618', {
+        //gerando token
+        const token = sign({}, auth.jwt.secret, {
             subject: user.id,
-            expiresIn: '1d'
+            expiresIn: auth.jwt.expiresIn
         })
 
         //retornando objeto salvo

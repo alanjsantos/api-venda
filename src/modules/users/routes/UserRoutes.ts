@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import UserController from "../controller/UserController";
+import isAuthenticated from "../middlewares/isAuthenticated";
 
 const userRoutes = Router();
 const userController = new UserController();
 
 //endpoint listar usuario
-userRoutes.get('/', userController.listUser);
+userRoutes.get('/', isAuthenticated, userController.listUser);
 
 //endpoint criar usuario
 userRoutes.post('/', 
