@@ -8,11 +8,14 @@ interface IRequest {
     email: string;
     password: string;
 }
+// interface IResponse {
+//     user: User
+// }
 
 export default class CreaSessionService {
 
     //metodo para criar um token
-    public async createUser({email, password}: IRequest): Promise<User> {
+    public async userAuthentication({email, password}: IRequest): Promise<User> {
         const userRepo = getCustomRepository(UserRepository);
         const user = await userRepo.findByEmail(email);
 
@@ -27,8 +30,6 @@ export default class CreaSessionService {
         if (!passwordConfirmed) {
             throw new AppError('Incorret email/password combination');   
         }
-        //salvando o objeto
-        await userRepo.save(user);
 
         //retornando objeto salvo
         return user;
