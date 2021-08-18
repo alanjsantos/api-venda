@@ -15,4 +15,14 @@ passwordRouter.post('/forgot',
  forgotPaswordController.createUserToken
 )
 
+passwordRouter.post('/reset', 
+ celebrate({
+     [Segments.BODY]: {
+         token: Joi.string().email().required(),
+         password: Joi.string().required()
+     }
+ }),
+ forgotPaswordController.createUserToken
+)
+
 export default passwordRouter;
