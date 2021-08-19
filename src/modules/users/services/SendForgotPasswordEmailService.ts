@@ -4,10 +4,10 @@ import UserTokens from "../typeorm/entities/UserToken";
 import UsersRepository from "../typeorm/repositories/UsersRepository";
 import UserRepository from "../typeorm/repositories/UsersRepository";
 import UsersTokensRepository from "../typeorm/repositories/UsersTokensRepository";
+import EtherealMail from '@config/mails/EtherealMail'
 
 interface IRequest {
     email: string;
-
 }
 
 export default class SendForgotPasswordEmailService {
@@ -26,5 +26,12 @@ export default class SendForgotPasswordEmailService {
         
         const token = await userTokensRepository.generate(user.id);
 
-    }
+        console.log(token);
+        
+
+        await EtherealMail.sendEmail({
+            to: email,
+            body: `Password reset request received: ${token?.token}`
+        })
+    }   
 }
