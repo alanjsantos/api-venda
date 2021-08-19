@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import ForgotPasswordController from "../controller/ForgotPasswordController";
+import ResetPasswordController from "../controller/ResetPasswordController";
 
 const passwordRouter = Router();
 const forgotPaswordController = new ForgotPasswordController();
+const resetPasswordController = new ResetPasswordController();
 
 //endpoint criar usuario
 passwordRouter.post('/forgot', 
@@ -18,11 +20,12 @@ passwordRouter.post('/forgot',
 passwordRouter.post('/reset', 
  celebrate({
      [Segments.BODY]: {
-         token: Joi.string().email().required(),
-         password: Joi.string().required()
+         token: Joi.string().uuid().required(),
+         password: Joi.string().required(),
+         password_confirmation: Joi.string().required().valid(Joi.ref('password'))
      }
  }),
- forgotPaswordController.createUserToken
+ resetPasswordController.createUserToken
 )
 
 export default passwordRouter;
