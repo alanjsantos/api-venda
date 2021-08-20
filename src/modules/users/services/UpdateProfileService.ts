@@ -8,8 +8,8 @@ interface IRequest {
     user_id: string;
     email: string;
     name: string;
-    password: string;
-    old_password: string;
+    password?: string;
+    old_password?: string;
 }
 
 export default class UpdateProfileService {
