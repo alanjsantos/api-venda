@@ -16,7 +16,7 @@ export default class UserProfileController {
 
     public async updateProfile(request: Request, response: Response): Promise<Response>{
         const user_id = request.user.id
-        const {name, email, password, old_password} = request.body()
+        const {name, email, password, old_password} = request.body;
         const updateProfileService = new UpdateProfileService();
         
         const user = await updateProfileService.updateProfile({user_id, name, email, password, old_password})
