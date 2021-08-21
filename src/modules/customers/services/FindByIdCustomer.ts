@@ -7,7 +7,7 @@ interface IRequest {
     id: string
 }
 
-export default class ShowCustomersService {
+export default class FindByIdCustomer {
 
     //metodo para criar um customers
     public async findByCustomers({id}: IRequest): Promise<Customers> {
