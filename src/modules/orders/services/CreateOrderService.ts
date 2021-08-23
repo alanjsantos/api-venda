@@ -66,7 +66,7 @@ export default class CreateOrderService {
             product_id: product.id,
             quantity: product.quantity,
             price: existsProducts.filter(p => p.id === product.id)[0].price,
-          }));
+            }));
         
         //criando order para salvar
         const order = await orderRepo.createOrder({
