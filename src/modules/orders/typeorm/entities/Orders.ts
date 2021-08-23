@@ -1,5 +1,6 @@
 import Customers from "@modules/customers/typeorm/entities/Customers";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import OrdersProducts from "./OrdersProducts";
 
 @Entity('orders')
 export default class Orders {
@@ -10,6 +11,9 @@ export default class Orders {
     @ManyToOne(() => Customers)
     @JoinColumn({name: 'customer_id'})
     customer: Customers
+
+    @OneToMany(() => OrdersProducts, order_products => order_products.order, {cascade: true})
+    order_products: OrdersProducts[]
 
     @CreateDateColumn()
     created_at: Date;
