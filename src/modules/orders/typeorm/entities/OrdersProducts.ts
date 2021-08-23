@@ -18,7 +18,10 @@ export default class OrdersProducts {
     products: Products
 
     @Column()
-    name: string;
+    order_id: string;
+
+    @Column()
+    product_id: string;
 
     @Column('decimal')
     price: number;
