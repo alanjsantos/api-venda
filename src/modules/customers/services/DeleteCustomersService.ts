@@ -14,7 +14,7 @@ export default class DeleteCustomersService {
         const customersRepo = getCustomRepository(CustomersRepository);
   
         //buscando todos o customers
-        const customers = await customersRepo.findOne(id)
+        const customers = await customersRepo.findById(id)
         
         if (!customers) {
             throw new AppError('Customer não existe!')

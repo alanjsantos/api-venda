@@ -15,21 +15,21 @@ export default class UpdateCustomersService {
     public async updateCustomer({id, name, email}: IRequest): Promise<Customers> {
 
         const customersRepo = getCustomRepository(CustomersRepository);
-
-        //buscando customer por nome
-        const customerEmailExist = await customersRepo.findByEmail(email);
-  
+        
         //buscando customer
-        const customers = await customersRepo.findOne(id)
+        const customers = await customersRepo.findById(id)
         
         //verificando se existe customer
         if (!customers) {
             throw new AppError('Customer not found')
         }
+        
+        //buscando customer por email
+        const customerEmailExist = await customersRepo.findByEmail(email)
 
         //verificando se existe customer com o mesmo nome
         if (customerEmailExist && email !== customers.email) {
-            throw new AppError('There is already one Customer with this name');
+            throw new AppError('There is already one Customer with this email');
         }
         
         //atualizando os campos.

@@ -19,7 +19,7 @@ export default class CreateCustomersService {
         
         //verificando se existe produto com este mesmo nome
         if(customerstExist){
-            throw new AppError('There is already one Customers with this name.')
+            throw new AppError('There is already one Customers with this email.')
         }
 
         //cria o customer
