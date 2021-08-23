@@ -40,14 +40,14 @@ export default class CreateOrderService {
         }
 
         //verificando se ids de produtos
-        const existsProductsIds = existsProducts.map((product) => product.id);
+        const existsProductsIds = existsProducts.map(product => product.id);
 
         //checando produtos inexistente.
         const checkInexistentProducts = products.filter(
             product => !existsProductsIds.includes(product.id)
         )
 
-        if (checkInexistentProducts) {
+        if (checkInexistentProducts.length) {
             throw new AppError(`Could not find ${checkInexistentProducts[0].id}`);
         }
 
@@ -62,13 +62,11 @@ export default class CreateOrderService {
             throw new AppError(`The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`);
         }
 
-        const serializedProducts = products.map(
-            product => ({
-                product_id: product.id,
-                quantity: product.quantity,
-                price: existsProducts.filter(p => p.id == product.id)[0].price
-            })
-        )
+        const serializedProducts = products.map(product => ({
+            product_id: product.id,
+            quantity: product.quantity,
+            price: existsProducts.filter(p => p.id === product.id)[0].price,
+          }));
         
         //criando order para salvar
         const order = await orderRepo.createOrder({
@@ -82,7 +80,7 @@ export default class CreateOrderService {
         const updateProductQuantity = order_products.map(
             product => ({
                 id: product.product_id,
-                quantity: existsProducts.filter(p => p.id == product.id)[0].quantity - product.quantity, 
+                quantity: existsProducts.filter(p => p.id == product.product_id)[0].quantity - product.quantity, 
             })
         )
 
