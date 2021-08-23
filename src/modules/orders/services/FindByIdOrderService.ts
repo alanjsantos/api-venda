@@ -7,10 +7,10 @@ interface IRequest {
     id: string;
 }
 
-export default class CreateOrderService {
+export default class FindByIdOrderService {
 
     //metodo para criar um pedido
-    public async createOrder({id}: IRequest): Promise<Orders> {
+    public async findByOrder({id}: IRequest): Promise<Orders> {
 
         const orderRepo = getCustomRepository(OrdersRepository);
         const order = await orderRepo.findById(id)
