@@ -32,7 +32,7 @@ export default class CustomersController {
         return response.status(201).json(customer);
     }
 
-    public async updateCustomer(request: Request, resposne: Response): Promise<Response> {
+    public async updateCustomer(request: Request, response: Response): Promise<Response> {
         const {name, email} = request.body;
         const {id} = request.params;
 
