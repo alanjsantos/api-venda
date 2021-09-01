@@ -15,5 +15,5 @@ export default {
             password: process.env.REDIS_PASS || undefined
         }
     },
-    driver: 'redos',
+    driver: 'redis',
 } as ICacheConfig
