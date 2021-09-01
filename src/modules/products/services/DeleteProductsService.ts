@@ -1,3 +1,4 @@
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
@@ -12,6 +13,7 @@ class DeleteProductsService {
     public async excetute({id}: IRequest): Promise<void> {
 
         const productsRepo = getCustomRepository(ProductRepository);
+        const redisCache = new RedisCache();
   
         //buscando todos os produtos
         const products = await productsRepo.findOne(id)
@@ -19,6 +21,8 @@ class DeleteProductsService {
         if (!products) {
             throw new AppError('Produto não existe!')
         }
+
+        await redisCache.invalidate('api-vendas-PRODUCT_LIST')
 
         //deletando produto
         await productsRepo.remove(products);
