@@ -1,8 +1,8 @@
 import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { getCustomRepository } from "typeorm";
-import Products from "../typeorm/entities/Products";
-import { ProductRepository } from "../typeorm/repositories/ProductsRepository";
+import Products from "../infra/typeorm/entities/Products";
+import { ProductRepository } from "../infra/typeorm/repositories/ProductsRepository";
 
 //tipando o objeto que irá ser salvo
 interface IRequest {
