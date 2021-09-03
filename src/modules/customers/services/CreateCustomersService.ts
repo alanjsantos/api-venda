@@ -1,7 +1,6 @@
 import AppError from "@shared/errors/AppError";
-import { getCustomRepository } from "typeorm";
+import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 import Customers from "../infra/typeorm/entities/Customers";
-import CustomersRepository from "../infra/typeorm/repositories/CustomersRepository";
 
 //recebdno o objeto do usuario que sera salvo.
 interface IRequest {
@@ -10,12 +9,12 @@ interface IRequest {
 }
 
 export default class CreateCustomersService {
+    constructor(private customersRepo: ICustomersRepository) {
+    }
 
     //metodo para criar um produto
     public async createCustomer({name, email}: IRequest): Promise<Customers> {
-
-        const customersRepo = getCustomRepository(CustomersRepository);
-        const customerstExist = await customersRepo.findByEmail(email);
+        const customerstExist = await this.customersRepo.findByEmail(email);
         
         //verificando se existe produto com este mesmo nome
         if(customerstExist){
@@ -23,7 +22,7 @@ export default class CreateCustomersService {
         }
 
         //cria o customer
-        const customers = customersRepo.create({
+        const customers = await this.customersRepo.create({
             name,
             email,
         })
