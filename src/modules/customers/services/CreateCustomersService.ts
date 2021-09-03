@@ -1,6 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { ICustomersRepository } from "../domain/repositories/ICustomersRepository";
 import Customers from "../infra/typeorm/entities/Customers";
+import {inject, injectable } from "tsyringe";
 
 //recebdno o objeto do usuario que sera salvo.
 interface IRequest {
@@ -8,8 +9,11 @@ interface IRequest {
     email: string;
 }
 
+@injectable()
 export default class CreateCustomersService {
-    constructor(private customersRepo: ICustomersRepository) {
+    constructor(
+        @inject('CusomtersRepository')
+        private customersRepo: ICustomersRepository) {
     }
 
     //metodo para criar um produto
