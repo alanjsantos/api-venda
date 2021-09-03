@@ -27,9 +27,6 @@ export default class CreateCustomersService {
             name,
             email,
         })
-        
-        //salva o customers
-        await customersRepo.save(customers);
 
         //retorna o customers salvo.
         return customers;
